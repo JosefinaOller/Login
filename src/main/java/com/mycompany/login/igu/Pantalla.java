@@ -228,27 +228,9 @@ public class Pantalla extends javax.swing.JFrame {
        String nombre_usuario = txt_usuario.getText();
        String contrasenia = new String (txt_password.getPassword());
        
-       List <Usuario> listaUsuarios = control.traerUsuarios();
+       String mensaje = control.validarUsuario(nombre_usuario,contrasenia);
        
-       if(listaUsuarios!=null){
-           for (Usuario usuario : listaUsuarios) {
-               if (usuario.getNombre().equalsIgnoreCase(nombre_usuario)) {
-                   if (usuario.getContrasenia().equals(contrasenia)) {
-                       txt_situacion.setText("¡Bienvenido " + nombre_usuario + "!");
-                   }
-                   else {
-                       txt_situacion.setText("Error, usuario y/o contraseña son incorrectos. ");
-                   }
-                   
-               }
-               else{
-                    txt_situacion.setText("Error, usuario y/o contraseña son incorrectos. ");
-
-               }
-               
-               
-           }
-       }
+       txt_situacion.setText(mensaje);
        
     }//GEN-LAST:event_btn_loginActionPerformed
 
