@@ -19,31 +19,30 @@ public class Controladora {
         return control.traerUsuarios();
     }
 
-    public String validarUsuario(String nombre_usuario, String contrasenia) {
+    public boolean validarUsuario(String nombre_usuario, String contrasenia) {
         
         List <Usuario> listaUsuarios = control.traerUsuarios();
-        String mensaje = "";
+        boolean ok = false;
        
        if(listaUsuarios!=null){
            for (Usuario usuario : listaUsuarios) {
-               if (usuario.getNombre().equalsIgnoreCase(nombre_usuario)) {
-                   if (usuario.getContrasenia().equals(contrasenia)) {
-                       mensaje = "¡Bienvenido " + nombre_usuario + "!";
-                   }
-                   else {
-                       mensaje =  "Error, la contraseña es incorrecta. ";
-                   }
-                   
+               if (usuario.getNombre().equals(nombre_usuario)) {
+                   ok = usuario.getContrasenia().equals(contrasenia);
                }
                else{
-                   mensaje = "Error, no es encontrado el usuario. ";
-
+                   ok = false;
                }
-               
-               
            }
        }
-       return mensaje;
+       return ok;
+    }
+
+    public void validarRol(String nombre_usuario, String contrasenia) {
+        
+        if (true) {
+            
+        }
+        
     }
     
 }

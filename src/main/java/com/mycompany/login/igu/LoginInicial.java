@@ -4,10 +4,10 @@ import com.mycompany.login.logica.Controladora;
 import com.mycompany.login.logica.Usuario;
 import java.util.List;
 
-public class Pantalla extends javax.swing.JFrame {
+public class LoginInicial extends javax.swing.JFrame {
     
     Controladora control = null;
-    public Pantalla() {
+    public LoginInicial() {
         control = new Controladora();
        // control.crearUsuario(new Usuario(0, "admin", "123Prueba")); //se ejecuta una vez
         initComponents();
@@ -228,10 +228,13 @@ public class Pantalla extends javax.swing.JFrame {
        String nombre_usuario = txt_usuario.getText();
        String contrasenia = new String (txt_password.getPassword());
        
-       String mensaje = control.validarUsuario(nombre_usuario,contrasenia);
-       
-       txt_situacion.setText(mensaje);
-       
+       boolean ok = control.validarUsuario(nombre_usuario,contrasenia);
+        if (ok) {
+            control.validarRol(nombre_usuario,contrasenia);
+        }
+        else{
+            txt_situacion.setText("Usuario o contraseña incorrectos");
+        }     
     }//GEN-LAST:event_btn_loginActionPerformed
 
     private void txt_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usuarioActionPerformed

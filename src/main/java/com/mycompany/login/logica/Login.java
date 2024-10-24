@@ -1,11 +1,11 @@
 package com.mycompany.login.logica;
 
-import com.mycompany.login.igu.Pantalla;
+import com.mycompany.login.igu.LoginInicial;
 
 public class Login {
     
     public static void main(String[] args) {
-        Pantalla pantalla = new Pantalla();
+        LoginInicial pantalla = new LoginInicial();
         pantalla.setVisible(true);
         pantalla.setLocationRelativeTo(null);
         
