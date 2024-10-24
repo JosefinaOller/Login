@@ -6,6 +6,9 @@ import java.util.List;
 public class ControladoraPersistencia {
     
     UsuarioJpaController usuario = new UsuarioJpaController();
+    RolJpaController rol = new RolJpaController();
+    
+    //Usuario
     
     public void crearUsuario (Usuario usu){
         usuario.create(usu);
@@ -18,5 +21,9 @@ public class ControladoraPersistencia {
     public List <Usuario> traerUsuarios(){
         return usuario.findUsuarioEntities();
     }
+    
+    //Rol
+    
+    
     
 }
