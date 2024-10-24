@@ -2,14 +2,12 @@ package com.mycompany.login.igu;
 
 import com.mycompany.login.logica.Controladora;
 import com.mycompany.login.logica.Usuario;
-import java.util.List;
 
 public class LoginInicial extends javax.swing.JFrame {
     
     Controladora control = null;
     public LoginInicial() {
         control = new Controladora();
-       // control.crearUsuario(new Usuario(0, "admin", "123Prueba")); //se ejecuta una vez
         initComponents();
     }
 
@@ -34,6 +32,11 @@ public class LoginInicial extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel1.setText("Login");
@@ -225,12 +228,23 @@ public class LoginInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_limpiarActionPerformed
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-       String nombre_usuario = txt_usuario.getText();
+       String nombre = txt_usuario.getText();
        String contrasenia = new String (txt_password.getPassword());
-       
-       boolean ok = control.validarUsuario(nombre_usuario,contrasenia);
-        if (ok) {
-            control.validarRol(nombre_usuario,contrasenia);
+       Usuario usuario = control.validarUsuario(nombre,contrasenia);
+        if (usuario!=null) {
+            String rol = usuario.getUnRol().getNombreRol();
+            if (rol.equals("admin")) {
+                PrincipalAdmin admin = new PrincipalAdmin(control,usuario);
+                admin.setVisible(true);
+                admin.setLocationRelativeTo(null);
+                this.dispose();
+            }
+            if (rol.equals("user")) {
+                PrincipalUser user = new PrincipalUser(control,usuario);
+                user.setVisible(true);
+                user.setLocationRelativeTo(null);
+                this.dispose();
+            }
         }
         else{
             txt_situacion.setText("Usuario o contraseña incorrectos");
@@ -240,6 +254,10 @@ public class LoginInicial extends javax.swing.JFrame {
     private void txt_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_usuarioActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_limpiar;

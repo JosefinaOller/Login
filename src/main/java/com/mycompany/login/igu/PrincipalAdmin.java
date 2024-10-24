@@ -1,10 +1,19 @@
 
 package com.mycompany.login.igu;
 
+import com.mycompany.login.logica.Controladora;
+import com.mycompany.login.logica.Usuario;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 public class PrincipalAdmin extends javax.swing.JFrame {
 
-    public PrincipalAdmin() {
+    Controladora control;
+    Usuario usuario;
+    public PrincipalAdmin(Controladora control,Usuario usuario) {
         initComponents();
+        this.control = control;
+        this.usuario = usuario;
     }
 
     
@@ -16,7 +25,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNombreUser = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaUsuarios = new javax.swing.JTable();
         btnSalir = new javax.swing.JButton();
         btnCrear = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -24,12 +33,17 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         btnRecargar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setText("Sistema Administrador de Usuarios");
 
         txtNombreUser.setEditable(false);
-        txtNombreUser.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        txtNombreUser.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         txtNombreUser.setText("jTextField1");
         txtNombreUser.setBorder(null);
         txtNombreUser.addActionListener(new java.awt.event.ActionListener() {
@@ -38,7 +52,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -49,7 +63,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaUsuarios);
 
         btnSalir.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
@@ -173,6 +187,44 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreUserActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.txtNombreUser.setText(usuario.getNombre());
+        cargarTabla();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void cargarTabla(){
+        DefaultTableModel modeloTabla = new DefaultTableModel(){
+            
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+            
+        };
+        
+        //establecemos nombres de las columnas
+        String titulos[] = {"Id", "Usuario", "Rol"};
+        modeloTabla.setColumnIdentifiers(titulos);
+        
+        List <Usuario> listaUsuarios = control.traerUsuarios();
+        
+        //recorrer la lista y mostrar cada uno de los elementos en la tabla
+        if (listaUsuarios!=null) {
+            for (Usuario user : listaUsuarios) {
+                Object[] objeto = {user.getId(), user.getNombre(), user.getUnRol().getNombreRol()};
+                
+                modeloTabla.addRow(objeto);
+                
+            }
+            
+        }
+        
+        tablaUsuarios.setModel(modeloTabla);
+        
+    }
+
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnCrear;
@@ -182,7 +234,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaUsuarios;
     private javax.swing.JTextField txtNombreUser;
     // End of variables declaration//GEN-END:variables
 }

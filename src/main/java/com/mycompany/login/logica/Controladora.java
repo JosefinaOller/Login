@@ -19,30 +19,20 @@ public class Controladora {
         return control.traerUsuarios();
     }
 
-    public boolean validarUsuario(String nombre_usuario, String contrasenia) {
+    public Usuario validarUsuario(String nombre_usuario, String contrasenia) {
         
         List <Usuario> listaUsuarios = control.traerUsuarios();
-        boolean ok = false;
+        Usuario user=null;
        
        if(listaUsuarios!=null){
            for (Usuario usuario : listaUsuarios) {
                if (usuario.getNombre().equals(nombre_usuario)) {
-                   ok = usuario.getContrasenia().equals(contrasenia);
-               }
-               else{
-                   ok = false;
+                   user = usuario;
+                   return user;
                }
            }
        }
-       return ok;
-    }
-
-    public void validarRol(String nombre_usuario, String contrasenia) {
-        
-        if (true) {
-            
-        }
-        
+       return user;
     }
     
 }
