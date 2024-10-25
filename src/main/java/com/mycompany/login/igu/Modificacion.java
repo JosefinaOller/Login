@@ -37,7 +37,7 @@ public class Modificacion extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificación de usuarios");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -151,7 +151,7 @@ public class Modificacion extends javax.swing.JFrame {
         String contrasenia = new String (txtContrasenia.getPassword());
         String rol = (String) cmbRol.getSelectedItem();
         control.editarUsuario(usuario,nombre,contrasenia,rol);
-        mostrarMensaje("Se modificó exitosamente el nuevo usuario", "Usuario modificado","Info");
+        mostrarMensaje("Se modificó exitosamente el usuario", "Usuario modificado","Info");
         this.dispose();
         
     }//GEN-LAST:event_btnGuardarActionPerformed

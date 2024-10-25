@@ -189,12 +189,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                 Modificacion modUsuario = new Modificacion(control,id_usuario);
                 modUsuario.setVisible(true);
                 modUsuario.setLocationRelativeTo(null);
-                this.dispose();
                 
                 cargarTabla();
             }
             else{
-                mostrarMensaje("No se seleccinó ningúna usuario","Error al editar usuario","Error");
+                mostrarMensaje("No se seleccinó ningún usuario","Error al editar usuario","Error");
             }
             
         }
