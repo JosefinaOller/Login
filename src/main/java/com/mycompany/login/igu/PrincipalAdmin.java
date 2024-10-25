@@ -4,6 +4,8 @@ package com.mycompany.login.igu;
 import com.mycompany.login.logica.Controladora;
 import com.mycompany.login.logica.Usuario;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class PrincipalAdmin extends javax.swing.JFrame {
@@ -33,6 +35,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         btnRecargar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema Administrador");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -75,6 +78,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         btnCrear.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnCrear.setText("Crear Nuevo Usuario");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
 
         btnEditar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnEditar.setText("Editar Usuario");
@@ -168,19 +176,56 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        //Controlo que la tabla no esté vacía
+        if (tablaUsuarios.getRowCount() > 0) {
+            //Controlo que se haya seleccionado a una mascota
+            if (tablaUsuarios.getSelectedRow()!=-1) {
+                int id_usuario = Integer.parseInt(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(),0)));
+                
+                Modificacion modUsuario = new Modificacion(control,id_usuario);
+                modUsuario.setVisible(true);
+                modUsuario.setLocationRelativeTo(null);
+                this.dispose();
+                
+                cargarTabla();
+            }
+            else{
+                mostrarMensaje("No se seleccinó ningúna usuario","Error al editar usuario","Error");
+            }
+            
+        }
+        else{
+            mostrarMensaje("No hay nada para editar en la tabla","Error al editar usuario","Error");
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        // TODO add your handling code here:
+        //Controlo que la tabla no esté vacia 
+        if (tablaUsuarios.getRowCount() > 0) {
+            //Controlo que se haya seleccionado a un usuario
+            if (tablaUsuarios.getSelectedRow()!=-1) {
+                int id_usuario = Integer.parseInt(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(),0)));
+                control.eliminarUsuario(id_usuario);
+                mostrarMensaje("Se eliminó correctamente", "Eliminación exitosa de usuario", "Info");
+                cargarTabla();
+            }
+            else{
+                mostrarMensaje("No se seleccionó ningún usuario", "Error al eliminar usuario", "Error");
+            }
+            
+        }
+        else{
+            mostrarMensaje("No hay nada para eliminar en la tabla","Error al eliminar usuario","Error");
+        }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarActionPerformed
-        // TODO add your handling code here:
+        cargarTabla();
+        mostrarMensaje("Ya fue recargada la tabla", "Tabla actualizada", "Info");
     }//GEN-LAST:event_btnRecargarActionPerformed
 
     private void txtNombreUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreUserActionPerformed
@@ -188,9 +233,15 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreUserActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        this.txtNombreUser.setText(usuario.getNombre());
+        this.txtNombreUser.setText(usuario.getNombreUsuario());
         cargarTabla();
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        Alta altaUsuario = new Alta(control);
+        altaUsuario.setVisible(true);
+        altaUsuario.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnCrearActionPerformed
 
     private void cargarTabla(){
         DefaultTableModel modeloTabla = new DefaultTableModel(){
@@ -211,7 +262,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         //recorrer la lista y mostrar cada uno de los elementos en la tabla
         if (listaUsuarios!=null) {
             for (Usuario user : listaUsuarios) {
-                Object[] objeto = {user.getId(), user.getNombre(), user.getUnRol().getNombreRol()};
+                Object[] objeto = {user.getId(), user.getNombreUsuario(), user.getUnRol().getNombreRol()};
                 
                 modeloTabla.addRow(objeto);
                 
@@ -221,6 +272,19 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         
         tablaUsuarios.setModel(modeloTabla);
         
+    }
+    
+    public void mostrarMensaje (String mensaje, String titulo, String tipo){
+        JOptionPane optionPane = new JOptionPane(mensaje);
+        if (tipo.equals("Info")) {
+            optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (tipo.equals("Error")) {
+                    optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        JDialog dialog = optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
     }
 
 

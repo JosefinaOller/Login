@@ -2,8 +2,8 @@ package com.mycompany.login.logica;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Usuario implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    //@GeneratedValue(strategy=GenerationType.SEQUENCE) Genera problemas cuando la base de datos ya fue creada anteriormente
     private int id;
     private String nombreUsuario;
     private String contrasenia;
@@ -53,15 +53,7 @@ public class Usuario implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
-    public String getNombre() {
-        return nombreUsuario;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombreUsuario = nombre;
-    }
-
+    
     public String getContrasenia() {
         return contrasenia;
     }

@@ -30,6 +30,7 @@ public class PrincipalUser extends javax.swing.JFrame {
         btnRecargar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema Usuario");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -151,7 +152,7 @@ public class PrincipalUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRecargarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        this.txtNombreUser.setText(usuario.getNombre());
+        this.txtNombreUser.setText(usuario.getNombreUsuario());
         cargarTabla();
     }//GEN-LAST:event_formWindowOpened
 
@@ -175,7 +176,7 @@ public class PrincipalUser extends javax.swing.JFrame {
         if (listaUsuarios!=null) {
             for (Usuario user : listaUsuarios) {
                 if (user.getUnRol().getNombreRol().equals("user")) {
-                    Object[] objeto = {user.getId(), user.getNombre(), user.getUnRol().getNombreRol()};
+                    Object[] objeto = {user.getId(), user.getNombreUsuario(), user.getUnRol().getNombreRol()};
                     modeloTabla.addRow(objeto);
                 }
             }
