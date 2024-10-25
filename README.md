@@ -17,7 +17,7 @@ Este proyecto es una **aplicación de autenticación** y **gestión de roles y p
 
 ## Tecnologías 🛠️
 
-- **Java 17**: Lenguaje de programación.
+- **Java 17**: Lenguaje de programación orientado a objetos.
 - **JPA (Java Persistence API)**: Para la persistencia de datos.
 - **MySQL**: Base de datos relacional.
 - **JFrame**: Para la construcción de interfaces gráficas de usuario (IGU).
